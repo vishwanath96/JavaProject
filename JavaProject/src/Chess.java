@@ -12,7 +12,6 @@ public class Chess extends JFrame {
   public Chess(){
   Dimension bSize = new Dimension(600, 600);
  
-  //  Use a Layered Pane for this this application
  pane = new JLayeredPane();
   getContentPane().add(pane);
   pane.setPreferredSize(bSize);
