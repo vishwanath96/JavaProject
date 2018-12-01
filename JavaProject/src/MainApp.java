@@ -7,7 +7,7 @@ public class MainApp {
 		
 			  JFrame jframe = new ChessProject(); 
 			  jframe.pack();
-			  jframe.setResizable(true);
+			  jframe.setResizable(false);
 			  jframe.setLocationRelativeTo( null );
 			  jframe.setVisible(true);
 			  }
