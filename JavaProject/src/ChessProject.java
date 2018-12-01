@@ -3,19 +3,20 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
  
-public class ChessGame extends JFrame {
+public class ChessProject extends JFrame implements MouseListener,MouseMotionListener {
   JLayeredPane pane;
   JPanel board;
   JLabel piece;
   int x,y,s,rows;
  
-  public ChessGame(){
+  public ChessProject(){
   Dimension bSize =new Dimension(615, 615);
  
   pane = new JLayeredPane();
   getContentPane().add(pane);
   pane.setPreferredSize(bSize);
-
+  pane.addMouseListener(this);
+  pane.addMouseMotionListener(this);
  
   board = new JPanel();
   pane.add(board, JLayeredPane.DEFAULT_LAYER);
@@ -135,5 +136,54 @@ public class ChessGame extends JFrame {
   panel.add(piece);
   }
 
+  public void mousePressed(MouseEvent e){
+  piece = null;
+  Component com =  board.findComponentAt(e.getX(), e.getY());
+ 
+  if (com instanceof JPanel) 
+  return;
+ 
+  Point pLocation = com.getParent().getLocation();
+  x = pLocation.x - e.getX();
+  y = pLocation.y - e.getY();
+  piece = (JLabel)com;
+  piece.setLocation(e.getX() + x, e.getY() + y);
+  piece.setSize(piece.getWidth(), piece.getHeight());
+  pane.add(piece, JLayeredPane.DRAG_LAYER);
+  }
+   
+  public void mouseDragged(MouseEvent me) {
+  if (piece==null) return;
+ piece.setLocation(me.getX() + x, me.getY() + y);
+ }
   
+  public void mouseReleased(MouseEvent e) {
+  if(piece==null) return;
+ 
+  piece.setVisible(false);
+  Component com = board.findComponentAt(e.getX(),e.getY());
+ 
+  if (com instanceof JLabel){
+  Container parent = com.getParent();
+  parent.remove(0);
+  parent.add(piece);
+  }
+  else {
+  Container parent = (Container)com;
+  parent.add(piece);
+  }
+ 
+  piece.setVisible(true);
+  }
+  
+  
+  
+  public void mouseClicked(MouseEvent e) { 
+  }
+  public void mouseMoved(MouseEvent e) {
+  }
+  public void mouseEntered(MouseEvent e) { 
+  }
+  public void mouseExited(MouseEvent e) {
+  }
 }
